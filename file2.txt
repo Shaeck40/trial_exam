@@ -1,0 +1,15 @@
+1) To make it in 1NF, split the table in date and time.
+PK=
+Staffno* - dentistname-patiëntno*-patientname -date* -time-surgeryno
+
+2) 2NF, no partial dependencies
+
+Staffno* - dentistname
+
+patiëntno*-patientname-surgeryno
+
+staffno* -patiëntno*-date* -time
+
+3)3NF, no transitive dependencies
+3NF=2NF
+
