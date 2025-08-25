@@ -1,0 +1,53 @@
+db.resto.find({},{"borough":1,"cuisine":1}).limit(5)
+db.resto.find({"borough":"Bronx"},{name:1}).skip(5).limit(5)
+db.resto.find(
+  {
+    "grades.score": { $gt: 7 },
+    "cuisine": { $nin: ["American"] },
+    "address.coord.0": { $lt: -65.754168 }
+  },
+  { name: 1, _id: 0 }
+).limit(10)
+
+
+db.resto.find(
+  {
+    "borough": "Bronx",
+     $or: [{"cuisine":"American"},{"cuisine":"Chinese"}]},
+  { name: 1, _id: 0 }
+).limit(10)
+;
+
+
+db.resto.find(
+  {
+    "borough": { $nin: ["Bronx", "Staten Island", "Brooklyn"] }
+  },
+  { name: 1, _id: 0 }
+).limit(10)
+
+db.resto.find(
+  {},                       // geen filter, alle restaurants
+  { name: 1, cuisine: 1, borough: 1, _id: 0 }  // velden die je wilt tonen
+).sort(
+  { cuisine: 1, borough: -1 }   // cuisine A→Z, borough Z→A
+)
+
+db.resto.find(
+  {
+    grades: {
+      $elemMatch: {
+        grade: "A",
+        score: 11,
+        date: ISODate("2014-08-11T00:00:00Z")
+      }
+    }
+  },
+  {
+    restaurant_id: 1,
+    name: 1,
+    grades: 1,
+    _id: 0
+  }
+)
+db.resto.find({"address":{$exists:1}},{name:1}).count()
