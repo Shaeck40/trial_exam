@@ -1,0 +1,52 @@
+MariaDB [vacation]> select guestname, guestaddress from guest where guestaddress rlike "London$" order by guestname;
++--------------+--------------------+
+| guestname    | guestaddress       |
++--------------+--------------------+
+| John Kay     | 56 High St, London |
+| Mike Ritchie | 18 Tain St, London |
++--------------+--------------------+
+
+MariaDB [vacation]> select * from room where price<40 and type="single" or type="double" order by price;
++--------+---------+--------+-------+
+| roomno | hotelno | type   | price |
++--------+---------+--------+-------+
+|    701 | ch02    | single | 10.00 |
+|    801 | ch02    | double | 15.00 |
+|    901 | dc01    | single | 18.00 |
+|    501 | fb01    | single | 19.00 |
+|    601 | fb01    | double | 29.00 |
+|   1001 | ch01    | single | 29.99 |
+|   1001 | dc01    | double | 30.00 |
+|   1101 | fb02    | double | 86.00 |
++--------+---------+--------+-------+
+8 rows in set (0.000 sec)
+
+MariaDB [vacation]> select avg(price) from room;
++------------+
+| avg(price) |
++------------+
+|  35.748333 |
++------------+
+1 row in set (0.000 sec)
+
+
+MariaDB [vacation]> select sum(price) from room where type="double";
++------------+
+| sum(price) |
++------------+
+|     160.00 |
++------------+
+1 row in set (0.000 sec)
+
+MariaDB [vacation]> select distinct(guest.guestno),guest.guestname from booking
+join guest on guest.guestno=booking.guestno where month(datefrom="04") or month(dateto)="04";
++---------+--------------+
+| guestno | guestname    |
++---------+--------------+
+|   10006 | Tina Murphy  |
+|   10002 | Mike Ritchie |
+|   10001 | John Kay     |
+|   10004 | Joe Keogh    |
+|   10003 | Mary Tregear |
++---------+--------------+
+5 rows in set, 1 warning (0.001 sec)
